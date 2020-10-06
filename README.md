@@ -22,6 +22,22 @@ Commands | Alias | Description
 `make stop` | N/A. | Stop the Docker Compose services.
 `make restart` | N/A. | Restart the Docker Compose services.
 
+## Composer
+
+```console
+$ docker-compose exec php composer COMMAND
+```
+
+*Where `COMMAND` is a `composer` command.*
+
+## Symfony
+
+```console
+$ docker-compose exec php bin/console COMMAND
+```
+
+*Where `COMMAND` is a `composer` command.*
+
 [git]: https://github.com/QALT/api-platform
 [docker]: https://github.com/QALT/api-platform
 [dockercompose]: https://docs.docker.com/compose/
