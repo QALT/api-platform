@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\StudyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Study
 {
+    use TimestampableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -31,9 +34,13 @@ class Study
 
     /**
      * @ORM\ManyToOne(targetEntity=Degree::class, inversedBy="studies")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $degreeId;
+    private $degree;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="studies")
+     */
+    private $userAccount;
 
     public function getId(): ?int
     {
@@ -64,14 +71,26 @@ class Study
         return $this;
     }
 
-    public function getDegreeId(): ?Degree
+    public function getDegree(): ?Degree
     {
-        return $this->degreeId;
+        return $this->degree;
     }
 
-    public function setDegreeId(?Degree $degreeId): self
+    public function setDegree(?Degree $degree): self
     {
-        $this->degreeId = $degreeId;
+        $this->degree = $degree;
+
+        return $this;
+    }
+
+    public function getUseraccount(): ?User
+    {
+        return $this->userAccount;
+    }
+
+    public function setUseraccount(?User $userAccount): self
+    {
+        $this->userAccount = $userAccount;
 
         return $this;
     }

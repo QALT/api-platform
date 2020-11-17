@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\DegreeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Degree
 {
+    use TimestampableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,7 +30,7 @@ class Degree
     private $label;
 
     /**
-     * @ORM\OneToMany(targetEntity=Study::class, mappedBy="degreeId")
+     * @ORM\OneToMany(targetEntity=Study::class, mappedBy="degree")
      */
     private $studies;
 
@@ -65,7 +68,7 @@ class Degree
     {
         if (!$this->studies->contains($study)) {
             $this->studies[] = $study;
-            $study->setDegreeId($this);
+            $study->setDegree($this);
         }
 
         return $this;
@@ -76,8 +79,8 @@ class Degree
         if ($this->studies->contains($study)) {
             $this->studies->removeElement($study);
             // set the owning side to null (unless already changed)
-            if ($study->getDegreeId() === $this) {
-                $study->setDegreeId(null);
+            if ($study->getDegree() === $this) {
+                $study->setDegree(null);
             }
         }
 

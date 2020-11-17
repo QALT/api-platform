@@ -20,9 +20,9 @@ class PresentationPage
     private $id;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="text")
      */
-    private $content = [];
+    private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -33,24 +33,19 @@ class PresentationPage
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="presentationPage", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $userAccount;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Report::class, inversedBy="presentationPage")
-     */
-    private $reports;
+    private $owner;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getContent(): ?array
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    public function setContent(array $content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
@@ -69,26 +64,14 @@ class PresentationPage
         return $this;
     }
 
-    public function getUserAccount(): ?User
+    public function getOwner(): ?User
     {
-        return $this->userAccount;
+        return $this->owner;
     }
 
-    public function setUserAccount(User $userAccount): self
+    public function setOwner(User $owner): self
     {
-        $this->userAccount = $userAccount;
-
-        return $this;
-    }
-
-    public function getReports(): ?Report
-    {
-        return $this->reports;
-    }
-
-    public function setReports(?Report $reports): self
-    {
-        $this->reports = $reports;
+        $this->owner = $owner;
 
         return $this;
     }

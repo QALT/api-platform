@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ApplicationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,22 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Application
 {
+    use TimestampableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="applications")
-     */
-    private $offer;
-
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="applications")
-     */
-    private $applicant;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -39,79 +30,11 @@ class Application
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $customComment;
-
-    public function __construct()
-    {
-        $this->offer = new ArrayCollection();
-        $this->applicant = new ArrayCollection();
-    }
+    private $comment;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|Offer[]
-     */
-    public function getOffer(): Collection
-    {
-        return $this->offer;
-    }
-
-    public function addOffer(Offer $offer): self
-    {
-        if (!$this->offer->contains($offer)) {
-            $this->offer[] = $offer;
-            $offer->setApplications($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOffer(Offer $offer): self
-    {
-        if ($this->offer->contains($offer)) {
-            $this->offer->removeElement($offer);
-            // set the owning side to null (unless already changed)
-            if ($offer->getApplications() === $this) {
-                $offer->setApplications(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getApplicant(): Collection
-    {
-        return $this->applicant;
-    }
-
-    public function addApplicant(User $applicant): self
-    {
-        if (!$this->applicant->contains($applicant)) {
-            $this->applicant[] = $applicant;
-            $applicant->setApplications($this);
-        }
-
-        return $this;
-    }
-
-    public function removeApplicant(User $applicant): self
-    {
-        if ($this->applicant->contains($applicant)) {
-            $this->applicant->removeElement($applicant);
-            // set the owning side to null (unless already changed)
-            if ($applicant->getApplications() === $this) {
-                $applicant->setApplications(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getStatus(): ?string
@@ -126,14 +49,14 @@ class Application
         return $this;
     }
 
-    public function getCustomComment(): ?string
+    public function getComment(): ?string
     {
-        return $this->customComment;
+        return $this->comment;
     }
 
-    public function setCustomComment(?string $customComment): self
+    public function setComment(?string $comment): self
     {
-        $this->customComment = $customComment;
+        $this->comment = $comment;
 
         return $this;
     }

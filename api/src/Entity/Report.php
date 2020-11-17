@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ReportRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Report
 {
+    use TimestampableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -22,7 +23,7 @@ class Report
     private $id;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $motivation;
 
@@ -32,32 +33,20 @@ class Report
     private $status;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="reports")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $reporter;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="reportMentioned")
-     */
-    private $userReported;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="reports")
+     * @ORM\ManyToOne(targetEntity=Offer::class, inversedBy="reports")
      */
     private $offer;
 
     /**
-     * @ORM\OneToMany(targetEntity=PresentationPage::class, mappedBy="reports")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reportedBy")
      */
-    private $presentationPage;
-
-    public function __construct()
-    {
-        $this->reporter = new ArrayCollection();
-        $this->userReported = new ArrayCollection();
-        $this->offer = new ArrayCollection();
-        $this->presentationPage = new ArrayCollection();
-    }
+    private $userReported;
 
     public function getId(): ?int
     {
@@ -69,7 +58,7 @@ class Report
         return $this->motivation;
     }
 
-    public function setMotivation(?string $motivation): self
+    public function setMotivation(string $motivation): self
     {
         $this->motivation = $motivation;
 
@@ -88,126 +77,38 @@ class Report
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getReporter(): Collection
+    public function getReporter(): ?User
     {
         return $this->reporter;
     }
 
-    public function addReporter(User $reporter): self
+    public function setReporter(?User $reporter): self
     {
-        if (!$this->reporter->contains($reporter)) {
-            $this->reporter[] = $reporter;
-            $reporter->setReports($this);
-        }
+        $this->reporter = $reporter;
 
         return $this;
     }
 
-    public function removeReporter(User $reporter): self
-    {
-        if ($this->reporter->contains($reporter)) {
-            $this->reporter->removeElement($reporter);
-            // set the owning side to null (unless already changed)
-            if ($reporter->getReports() === $this) {
-                $reporter->setReports(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUserReported(): Collection
-    {
-        return $this->userReported;
-    }
-
-    public function addUserReported(User $userReported): self
-    {
-        if (!$this->userReported->contains($userReported)) {
-            $this->userReported[] = $userReported;
-            $userReported->setReportMentioned($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserReported(User $userReported): self
-    {
-        if ($this->userReported->contains($userReported)) {
-            $this->userReported->removeElement($userReported);
-            // set the owning side to null (unless already changed)
-            if ($userReported->getReportMentioned() === $this) {
-                $userReported->setReportMentioned(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Offer[]
-     */
-    public function getOffer(): Collection
+    public function getOffer(): ?Offer
     {
         return $this->offer;
     }
 
-    public function addOffer(Offer $offer): self
+    public function setOffer(?Offer $offer): self
     {
-        if (!$this->offer->contains($offer)) {
-            $this->offer[] = $offer;
-            $offer->setReports($this);
-        }
+        $this->offer = $offer;
 
         return $this;
     }
 
-    public function removeOffer(Offer $offer): self
+    public function getUserReported(): ?User
     {
-        if ($this->offer->contains($offer)) {
-            $this->offer->removeElement($offer);
-            // set the owning side to null (unless already changed)
-            if ($offer->getReports() === $this) {
-                $offer->setReports(null);
-            }
-        }
-
-        return $this;
+        return $this->userReported;
     }
 
-    /**
-     * @return Collection|PresentationPage[]
-     */
-    public function getPresentationPage(): Collection
+    public function setUserReported(?User $userReported): self
     {
-        return $this->presentationPage;
-    }
-
-    public function addPresentationPage(PresentationPage $presentationPage): self
-    {
-        if (!$this->presentationPage->contains($presentationPage)) {
-            $this->presentationPage[] = $presentationPage;
-            $presentationPage->setReports($this);
-        }
-
-        return $this;
-    }
-
-    public function removePresentationPage(PresentationPage $presentationPage): self
-    {
-        if ($this->presentationPage->contains($presentationPage)) {
-            $this->presentationPage->removeElement($presentationPage);
-            // set the owning side to null (unless already changed)
-            if ($presentationPage->getReports() === $this) {
-                $presentationPage->setReports(null);
-            }
-        }
+        $this->userReported = $userReported;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Address
 {
+    use TimestampableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -114,12 +117,12 @@ class Address
         return $this;
     }
 
-    public function getUserAccount(): ?User
+    public function getUseraccount(): ?User
     {
         return $this->userAccount;
     }
 
-    public function setUserAccount(?User $userAccount): self
+    public function setUseraccount(?User $userAccount): self
     {
         $this->userAccount = $userAccount;
 
