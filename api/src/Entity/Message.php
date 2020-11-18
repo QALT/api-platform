@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\MessageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+    use TimestampableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,20 +30,16 @@ class Message
     private $content;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="sendMessages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sentMessages")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $sender;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="receivedMessages")
+     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="receivedmessages")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $receiver;
-
-    public function __construct()
-    {
-        $this->sender = new ArrayCollection();
-        $this->receiver = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -59,64 +58,26 @@ class Message
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getSender(): Collection
+    public function getSender(): ?User
     {
         return $this->sender;
     }
 
-    public function addSender(User $sender): self
+    public function setSender(?User $sender): self
     {
-        if (!$this->sender->contains($sender)) {
-            $this->sender[] = $sender;
-            $sender->setSendMessages($this);
-        }
+        $this->sender = $sender;
 
         return $this;
     }
 
-    public function removeSender(User $sender): self
-    {
-        if ($this->sender->contains($sender)) {
-            $this->sender->removeElement($sender);
-            // set the owning side to null (unless already changed)
-            if ($sender->getSendMessages() === $this) {
-                $sender->setSendMessages(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getReceiver(): Collection
+    public function getReceiver(): ?self
     {
         return $this->receiver;
     }
 
-    public function addReceiver(User $receiver): self
+    public function setReceiver(?User $receiver): self
     {
-        if (!$this->receiver->contains($receiver)) {
-            $this->receiver[] = $receiver;
-            $receiver->setReceivedMessages($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReceiver(User $receiver): self
-    {
-        if ($this->receiver->contains($receiver)) {
-            $this->receiver->removeElement($receiver);
-            // set the owning side to null (unless already changed)
-            if ($receiver->getReceivedMessages() === $this) {
-                $receiver->setReceivedMessages(null);
-            }
-        }
+        $this->receiver = $receiver;
 
         return $this;
     }

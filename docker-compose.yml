@@ -62,7 +62,7 @@ services:
       - POSTGRES_PASSWORD=!ChangeMe!
       - POSTGRES_USER=api-platform
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
+      - ./db-data:/var/lib/postgresql/data:rw
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./api/docker/db/data:/var/lib/postgresql/data:rw
     ports:
@@ -143,7 +143,6 @@ services:
     restart: always
     image: adminer:latest
     ports:
-        - 8080:8080
+        - 8081:8080
 volumes:
-  db-data: {}
   dev-certs: {}
