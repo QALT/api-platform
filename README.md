@@ -22,6 +22,12 @@ Commands | Alias | Description
 `make stop` | N/A. | Stop the Docker Compose services.
 `make restart` | N/A. | Restart the Docker Compose services.
 
+## Schema
+
+```console
+$ make schema
+```
+
 ## Composer
 
 ```console
@@ -37,6 +43,20 @@ $ docker-compose exec php bin/console COMMAND
 ```
 
 *Where `COMMAND` is a `composer` command.*
+
+## Token
+
+```console
+$ make token
+```
+
+## Endpoints
+
+Endpoint | Description
+---|---
+[`http://localhost:8081`](http://localhost:8081) | Adminer
+[`https://localhost:8443/api/docs`](https://localhost:8443/api/docs) | Docs
+
 
 [git]: https://github.com/QALT/api-platform
 [docker]: https://github.com/QALT/api-platform
