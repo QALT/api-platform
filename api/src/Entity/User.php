@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource
@@ -19,6 +20,14 @@ class User implements UserInterface
 {
     use TimestampableTrait;
 
+    const ENABLED = "enabled";
+    const DISABLED = "disabled";
+
+    const STATUS = [
+        self::ENABLED,
+        self::DISABLED
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,8 +37,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email()
      */
     private $email;
+
+    /**
+     * @var string plain password
+     */
+    private $plainPassword;
 
     /**
      * @var string The hashed password
@@ -58,9 +73,10 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "enabled"})
+     * @Assert\Choice(choices=User::STATUS)
      */
-    private $status;
+    private $status = self::ENABLED;
 
     /**
      * @ORM\OneToOne(targetEntity=Address::class, inversedBy="userAccount", cascade={"persist", "remove"})
@@ -136,6 +152,17 @@ class User implements UserInterface
     public function getUsername(): string
     {
         return (string) $this->email;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return (string) $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
     }
 
     /**
