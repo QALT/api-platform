@@ -47,7 +47,9 @@ $ docker-compose exec php bin/console COMMAND
 ## Token
 
 ```console
-$ make token
+$ mkdir ./api/config/jwt
+$ openssl genrsa -out api/config/jwt/private.pem -aes256 4096 //enter and confirm the JWT_passphrase in .env
+$ openssl rsa -pubout -in api/config/jwt/private.pem -out api/config/jwt/public.pem
 ```
 
 ## Endpoints
