@@ -9,13 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-    const CREATED = "created";
-    const DELETED = "deleted";
-
-    const STATUS = [
-        self::CREATED,
-        self::DELETED
-    ];
+    
 
 /**
  * @ApiResource()
@@ -25,6 +19,14 @@ class Offer
 {
     use TimestampableTrait;
 
+    const CREATED = "created";
+    const DELETED = "deleted";
+
+    const STATUS = [
+        self::CREATED,
+        self::DELETED
+    ];
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
