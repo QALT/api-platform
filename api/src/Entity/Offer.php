@@ -9,6 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+    const CREATED = "created";
+    const DELETED = "deleted";
+
+    const STATUS = [
+        self::CREATED,
+        self::DELETED
+    ];
+
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=OfferRepository::class)
@@ -35,9 +43,10 @@ class Offer
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "enabled"})
+     * @Assert\Choice(choices=Offer::STATUS)
      */
-    private $status;
+    private $status = self::CREATED;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offers")
