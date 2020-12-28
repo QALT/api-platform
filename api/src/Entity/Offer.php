@@ -43,7 +43,7 @@ class Offer
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, options={"default": "enabled"})
+     * @ORM\Column(type="string", length=255, options={"default": "created"})
      * @Assert\Choice(choices=Offer::STATUS)
      */
     private $status = self::CREATED;
