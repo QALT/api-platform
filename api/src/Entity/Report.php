@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -14,6 +15,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Report
 {
     use TimestampableTrait;
+
+    const SUBMITTED = "submitted";
+
+    const STATUS = [
+        self::SUBMITTED
+    ];
 
     /**
      * @ORM\Id
@@ -28,7 +35,8 @@ class Report
     private $motivation;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "submitted"})
+     * @Assert\Choice(choices=Report::STATUS)
      */
     private $status;
 
