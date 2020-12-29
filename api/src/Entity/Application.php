@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -20,7 +21,7 @@ class Application
     const STATUS = [
         self::APPLIED
     ];
-    
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
