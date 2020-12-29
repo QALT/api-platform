@@ -15,6 +15,12 @@ class Application
 {
     use TimestampableTrait;
 
+    const APPLIED = "applied";
+
+    const STATUS = [
+        self::APPLIED
+    ];
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,9 +29,10 @@ class Application
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "applied"})
+     * @Assert\Choice(choices=Application::STATUS)
      */
-    private $status;
+    private $status = self::APPLIED;
 
     /**
      * @ORM\Column(type="text", nullable=true)
