@@ -38,6 +38,12 @@ class Application
      */
     private $offer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applications")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $applicant;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +81,18 @@ class Application
     public function setOffer(?Offer $offer): self
     {
         $this->offer = $offer;
+
+        return $this;
+    }
+
+    public function getApplicant(): ?User
+    {
+        return $this->applicant;
+    }
+
+    public function setApplicant(?User $applicant): self
+    {
+        $this->applicant = $applicant;
 
         return $this;
     }
