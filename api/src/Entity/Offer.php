@@ -54,10 +54,16 @@ class Offer
      */
     private $reports;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Application::class, mappedBy="offer", orphanRemoval=true)
+     */
+    private $applications;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->reports = new ArrayCollection();
+        $this->applications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,6 +170,37 @@ class Offer
             // set the owning side to null (unless already changed)
             if ($report->getOffer() === $this) {
                 $report->setOffer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Application[]
+     */
+    public function getApplications(): Collection
+    {
+        return $this->applications;
+    }
+
+    public function addApplication(Application $application): self
+    {
+        if (!$this->applications->contains($application)) {
+            $this->applications[] = $application;
+            $application->setOffer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApplication(Application $application): self
+    {
+        if ($this->applications->contains($application)) {
+            $this->applications->removeElement($application);
+            // set the owning side to null (unless already changed)
+            if ($application->getOffer() === $this) {
+                $application->setOffer(null);
             }
         }
 

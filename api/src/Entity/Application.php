@@ -32,6 +32,12 @@ class Application
      */
     private $comment;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Offer::class, inversedBy="applications")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $offer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -57,6 +63,18 @@ class Application
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getOffer(): ?Offer
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(?Offer $offer): self
+    {
+        $this->offer = $offer;
 
         return $this;
     }
