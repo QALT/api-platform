@@ -8,6 +8,9 @@ use App\Repository\OfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+    
 
 /**
  * @ApiResource()
@@ -16,6 +19,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Offer
 {
     use TimestampableTrait;
+
+    const CREATED = "created";
+    const DELETED = "deleted";
+
+    const STATUS = [
+        self::CREATED,
+        self::DELETED
+    ];
 
     /**
      * @ORM\Id
@@ -35,9 +46,10 @@ class Offer
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "created"})
+     * @Assert\Choice(choices=Offer::STATUS)
      */
-    private $status;
+    private $status = self::CREATED;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offers")
