@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -15,6 +16,16 @@ class Application
 {
     use TimestampableTrait;
 
+    const SUBMITTED = "submitted";
+    const ACCEPTED = "accepted";
+    const REFUSED = "refused";
+
+    const STATUS = [
+        self::SUBMITTED,
+        self::ACCEPTED,
+        self::REFUSED
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,9 +34,10 @@ class Application
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "submitted"})
+     * @Assert\Choice(choices=Application::STATUS)
      */
-    private $status;
+    private $status = self::SUBMITTED;
 
     /**
      * @ORM\Column(type="text", nullable=true)

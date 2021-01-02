@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\PresentationPageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -14,6 +15,14 @@ use Doctrine\ORM\Mapping as ORM;
 class PresentationPage
 {
     use TimestampableTrait;
+
+    const ONLINE = "online";
+    const OFFLINE = "offline";
+
+    const STATUS = [
+        self::ONLINE,
+        self::OFFLINE
+    ];
 
     /**
      * @ORM\Id
@@ -28,7 +37,8 @@ class PresentationPage
     private $content;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default": "online"})
+     * @Assert\Choice(choices=PresentationPage::STATUS)
      */
     private $status;
 
