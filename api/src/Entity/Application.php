@@ -16,10 +16,14 @@ class Application
 {
     use TimestampableTrait;
 
-    const APPLIED = "applied";
+    const SUBMITTED = "submitted";
+    const ACCEPTED = "accepted";
+    const REFUSED = "refused";
 
     const STATUS = [
-        self::APPLIED
+        self::SUBMITTED,
+        self::ACCEPTED,
+        self::REFUSED
     ];
 
     /**
@@ -30,10 +34,10 @@ class Application
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, options={"default": "applied"})
+     * @ORM\Column(type="string", length=255, options={"default": "submitted"})
      * @Assert\Choice(choices=Application::STATUS)
      */
-    private $status = self::APPLIED;
+    private $status = self::SUBMITTED;
 
     /**
      * @ORM\Column(type="text", nullable=true)

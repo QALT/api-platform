@@ -17,9 +17,11 @@ class Report
     use TimestampableTrait;
 
     const SUBMITTED = "submitted";
+    const REVIEWED = "Reviewed";
 
     const STATUS = [
-        self::SUBMITTED
+        self::SUBMITTED,
+        self::REVIEWED
     ];
 
     /**

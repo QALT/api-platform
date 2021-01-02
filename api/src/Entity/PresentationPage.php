@@ -17,9 +17,11 @@ class PresentationPage
     use TimestampableTrait;
 
     const ONLINE = "online";
+    const OFFLINE = "offline";
 
     const STATUS = [
-        self::ONLINE
+        self::ONLINE,
+        self::OFFLINE
     ];
 
     /**
