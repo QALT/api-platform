@@ -30,16 +30,16 @@ class Message
     private $content;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="receivedMessages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $receiver;
+
+    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sentMessages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $sender;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="receivedmessages")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $receiver;
 
     public function getId(): ?int
     {
@@ -58,6 +58,18 @@ class Message
         return $this;
     }
 
+    public function getReceiver(): ?User
+    {
+        return $this->receiver;
+    }
+
+    public function setReceiver(?User $receiver): self
+    {
+        $this->receiver = $receiver;
+
+        return $this;
+    }
+
     public function getSender(): ?User
     {
         return $this->sender;
@@ -66,18 +78,6 @@ class Message
     public function setSender(?User $sender): self
     {
         $this->sender = $sender;
-
-        return $this;
-    }
-
-    public function getReceiver(): ?self
-    {
-        return $this->receiver;
-    }
-
-    public function setReceiver(?User $receiver): self
-    {
-        $this->receiver = $receiver;
 
         return $this;
     }
