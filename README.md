@@ -14,6 +14,17 @@ $ git clone git@github.com:QALT/api-platform ~/github.com/QALT/api-platform
 $ cd ~/github.com/QALT/api-platform
 ```
 
+## Environment setup
+
+*Update the environment, especially those with a `!ChangeMe!` value.*
+
+```console
+$ cp .env .env.local
+$ $EDITOR .env.local
+```
+
+*Where `$EDITOR` is the command to open your text editor.*
+
 ## Commands
 
 Commands | Alias | Description
@@ -48,7 +59,8 @@ $ docker-compose exec php bin/console COMMAND
 
 ```console
 $ mkdir ./api/config/jwt
-$ openssl genrsa -out api/config/jwt/private.pem -aes256 4096 //enter and confirm the JWT_passphrase in .env
+$ cat .env # Copy the JWT_PASSPHRASE to your clipboard
+$ openssl genrsa -out api/config/jwt/private.pem -aes256 4096 # enter and confirm the JWT_passphrase in .env
 $ openssl rsa -pubout -in api/config/jwt/private.pem -out api/config/jwt/public.pem
 ```
 
