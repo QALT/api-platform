@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\ExperienceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ExperienceRepository;
+use App\Entity\Traits\TimestampableTrait;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ApiResource()
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Experience
 {
+    use TimestampableTrait;
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
