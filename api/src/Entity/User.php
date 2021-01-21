@@ -123,6 +123,11 @@ class User implements UserInterface
      */
     private $sentMessages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="userAccount")
+     */
+    private $experiences;
+
     public function __construct()
     {
         $this->studies = new ArrayCollection();
@@ -132,6 +137,7 @@ class User implements UserInterface
         $this->applications = new ArrayCollection();
         $this->receivedMessages = new ArrayCollection();
         $this->sentMessages = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -511,6 +517,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($sentMessage->getSender() === $this) {
                 $sentMessage->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Experience[]
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences[] = $experience;
+            $experience->setUserAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->contains($experience)) {
+            $this->experiences->removeElement($experience);
+            // set the owning side to null (unless already changed)
+            if ($experience->getUserAccount() === $this) {
+                $experience->setUserAccount(null);
             }
         }
 
