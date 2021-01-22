@@ -9,10 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={"groups"={"user:read"}},
+ *     denormalizationContext={"groups"={"user:write"}}
+ * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`useraccount`")
  */
@@ -32,49 +36,58 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user:read", "user:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email()
+     * @Groups({"user:read", "user:write"})
      */
     private $email;
 
     /**
      * @var string plain password
+     * @Groups({"user:write"})
      */
     private $plainPassword;
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user:read", "user:write"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $lastname;
     
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $birthday;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:read", "user:write"})
      */
     private $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": "enabled"})
      * @Assert\Choice(choices=User::STATUS)
+     * @Groups({"user:read", "user:write"})
      */
     private $status = self::ENABLED;
 
@@ -85,6 +98,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Study::class, mappedBy="userAccount")
+     * @Groups({"user:read"})
      */
     private $studies;
 
@@ -125,6 +139,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="userAccount")
+     * @Groups({"user:read"})
      */
     private $experiences;
 
