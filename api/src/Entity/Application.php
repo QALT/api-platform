@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ApplicationRepository;
-use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"application:read"}},
+ *      denormalizationContext={"groups"={"application:write"}}
+ * )
  * @ORM\Entity(repositoryClass=ApplicationRepository::class)
  */
 class Application
@@ -30,29 +34,34 @@ class Application
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"offer:read", "offer:write","application:write","application:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": "submitted"})
      * @Assert\Choice(choices=Application::STATUS)
+     * @Groups({"offer:read", "offer:write","application:write","application:read"})
      */
     private $status = self::SUBMITTED;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"offer:read", "offer:write","application:write","application:read"})
      */
     private $comment;
 
     /**
      * @ORM\ManyToOne(targetEntity=Offer::class, inversedBy="applications")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"application:write","application:read"})
      */
     private $offer;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applications")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"application:write","application:read"})
      */
     private $applicant;
 
