@@ -17,12 +17,15 @@ class JWTCreatedListener
     {
         /** @var $user \AppBundle\Entity\User */
         $user = $event->getUser();
+        $expiration = new \DateTime('+1 day');
 
         // add new data
+        $payload['id'] = $user->getId();
+        $payload['email'] = $user->getUsername();
         $payload['firstname'] = $user->getFirstname();
         $payload['lastname'] = $user->getLastname();
-        $payload['email'] = $user->getUsername();
-        $payload['id'] = $user->getId();
+        $payload['roles'] = $user->getRoles();
+        $payload['exp'] = $expiration->getTimestamp();
 
         $event->setData($payload);
     }
