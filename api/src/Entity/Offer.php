@@ -9,11 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
     
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"offer:read"}},
+ *      denormalizationContext={"groups"={"offer:write"}}
+ * )
  * @ORM\Entity(repositoryClass=OfferRepository::class)
  */
 class Offer
@@ -32,42 +35,50 @@ class Offer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"offer:read", "offer:write","application:write","application:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"offer:read", "offer:write","application:write","application:read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"offer:read", "offer:write","application:write","application:read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": "created"})
      * @Assert\Choice(choices=Offer::STATUS)
+     * @Groups({"offer:read", "offer:write","application:write","application:read"})
      */
     private $status = self::CREATED;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offers")
+     * @Groups({"offer:read", "offer:write"})
      */
     private $employer;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="offers")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="offers", cascade={"persist"})
+     * @Groups({"offer:read", "offer:write"})
      */
     private $tags;
 
     /**
      * @ORM\OneToMany(targetEntity=Report::class, mappedBy="offer")
+     * @Groups({"offer:read", "offer:write"})
      */
     private $reports;
 
     /**
      * @ORM\OneToMany(targetEntity=Application::class, mappedBy="offer", orphanRemoval=true)
+     * @Groups({"offer:read", "offer:write"})
      */
     private $applications;
 
