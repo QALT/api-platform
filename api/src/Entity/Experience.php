@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Experience
 {
     use TimestampableTrait;
-    
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

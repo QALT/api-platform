@@ -24,10 +24,10 @@ class User implements UserInterface
 {
     use TimestampableTrait;
 
-    const ENABLED = "enabled";
-    const DISABLED = "disabled";
+    public const ENABLED = "enabled";
+    public const DISABLED = "disabled";
 
-    const STATUS = [
+    public const STATUS = [
         self::ENABLED,
         self::DISABLED
     ];
@@ -71,7 +71,7 @@ class User implements UserInterface
      * @Groups({"user:read", "user:write", "application:read"})
      */
     private $lastname;
-    
+
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Groups({"user:read", "user:write"})

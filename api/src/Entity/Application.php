@@ -23,11 +23,11 @@ class Application
 {
     use TimestampableTrait;
 
-    const SUBMITTED = "submitted";
-    const ACCEPTED = "accepted";
-    const REFUSED = "refused";
+    public const SUBMITTED = "submitted";
+    public const ACCEPTED = "accepted";
+    public const REFUSED = "refused";
 
-    const STATUS = [
+    public const STATUS = [
         self::SUBMITTED,
         self::ACCEPTED,
         self::REFUSED
