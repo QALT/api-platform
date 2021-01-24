@@ -17,3 +17,12 @@ App\Entity\User:
         status: "enabled"
         createdAt: <date_create()>
         updatedAt: <date_create()>
+    user_3:
+        email: "admin@gmail.com"
+        plainPassword: "Password"
+        firstname: "john"
+        lastname: "Doe"
+        roles: ['ROLE_ADMIN']
+        status: "enabled"
+        createdAt: <date_create()>
+        updatedAt: <date_create()>
