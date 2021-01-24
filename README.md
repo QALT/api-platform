@@ -76,3 +76,6 @@ Endpoint | Description
 [docker]: https://github.com/QALT/api-platform
 [dockercompose]: https://docs.docker.com/compose/
 [gnumake]: https://www.gnu.org/software/make/
+
+## Fixture
+docker-compose exec php bin/console hautelook:fixtures:load

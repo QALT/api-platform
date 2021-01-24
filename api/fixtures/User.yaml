@@ -1,0 +1,19 @@
+App\Entity\User:
+    user_1:
+        email: "employee@gmail.com"
+        plainPassword: "Password"
+        firstname: "john"
+        lastname: "Doe"
+        roles: ['ROLE_EMPLOYEE']
+        status: "enabled"
+        createdAt: <date_create()>
+        updatedAt: <date_create()>
+    user_2:
+        email: "employer@gmail.com"
+        plainPassword: "Password"
+        firstname: "john"
+        lastname: "Doe"
+        roles: ['ROLE_EMPLOYER']
+        status: "enabled"
+        createdAt: <date_create()>
+        updatedAt: <date_create()>
