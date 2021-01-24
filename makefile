@@ -13,3 +13,6 @@ entity:
 
 schema:
 	docker-compose exec php bin/console d:s:u --force
+
+fixture:
+	docker-compose exec php bin/console hautelook:fixtures:load
