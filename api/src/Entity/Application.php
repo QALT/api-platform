@@ -37,34 +37,34 @@ class Application
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"offer:read", "offer:write","application:write","application:read"})
+     * @Groups({"offer:read", "offer:write", "application:write", "application:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": "submitted"})
      * @Assert\Choice(choices=Application::STATUS)
-     * @Groups({"offer:read", "offer:write","application:write","application:read"})
+     * @Groups({"offer:read", "offer:write", "application:write", "application:read"})
      */
     private $status = self::SUBMITTED;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"offer:read", "offer:write","application:write","application:read"})
+     * @Groups({"offer:read", "offer:write", "application:write", "application:read"})
      */
     private $comment;
 
     /**
      * @ORM\ManyToOne(targetEntity=Offer::class, inversedBy="applications")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"application:write","application:read"})
+     * @Groups({"application:write", "application:read"})
      */
     private $offer;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applications")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"application:write","application:read"})
+     * @Groups({"application:write", "application:read", "offer:read"})
      */
     private $applicant;
 
