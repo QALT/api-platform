@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\OfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,13 +12,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
-    
 
 /**
  * @ApiResource(
  *      normalizationContext={"groups"={"offer:read"}},
  *      denormalizationContext={"groups"={"offer:write"}}
  * )
+ * @ApiFilter(SearchFilter::class, properties={"employer.id": "exact"})
  * @ORM\Entity(repositoryClass=OfferRepository::class)
  */
 class Offer
