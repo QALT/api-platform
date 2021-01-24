@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ApplicationRepository;
@@ -14,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      normalizationContext={"groups"={"application:read"}},
  *      denormalizationContext={"groups"={"application:write"}}
  * )
+ * @ApiFilter(SearchFilter::class, properties={"offer.employer.id": "exact", "applicant.id": "exact"})
  * @ORM\Entity(repositoryClass=ApplicationRepository::class)
  */
 class Application
