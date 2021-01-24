@@ -1,0 +1,21 @@
+App\Entity\Degree:
+    degree_1:
+        label: "Baccalauréat"
+        createdAt: <date_create()>
+        updatedAt: <date_create()>
+    degree_2:
+        label: "BTS"
+        createdAt: <date_create()>
+        updatedAt: <date_create()>
+    degree_3:
+        label: "Licence"
+        createdAt: <date_create()>
+        updatedAt: <date_create()>
+    degree_4:
+        label: "Master 1"
+        createdAt: <date_create()>
+        updatedAt: <date_create()>
+    degree_5:
+        label: "Master 2"
+        createdAt: <date_create()>
+        updatedAt: <date_create()>
