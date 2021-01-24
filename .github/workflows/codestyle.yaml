@@ -1,0 +1,21 @@
+name: Code Style
+
+on: [push, pull_request]
+
+jobs:
+    codestyle:
+        name: Check the code style of the project
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout the project
+              uses: actions/checkout@v2
+
+            - name: Start the Docker Compose services
+              run: make start
+
+            - name: Install the dependencies
+              run: make install
+
+            - name: Check the code style of the project
+              run: make lint
