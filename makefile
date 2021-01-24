@@ -1,4 +1,13 @@
-.PHONY: start stop restart schema token
+.PHONY: start stop restart schema token lint fix
+
+DOCKER_COMPOSE_EXEC_OPTIONS=
+
+ifeq (${CI},true)
+	DOCKER_COMPOSE_EXEC_OPTIONS=--user root -T
+endif
+
+install:
+	docker-compose exec $(DOCKER_COMPOSE_EXEC_OPTIONS) php composer install
 
 start:
 	docker-compose up --detach
@@ -9,10 +18,16 @@ stop:
 restart: stop start
 
 entity:
-	docker-compose exec php php bin/console make:entity
+	docker-compose exec $(DOCKER_COMPOSE_EXEC_OPTIONS) php php bin/console make:entity
 
 schema:
-	docker-compose exec php bin/console d:s:u --force
+	docker-compose exec $(DOCKER_COMPOSE_EXEC_OPTIONS) php bin/console d:s:u --force
 
 fixture:
-	docker-compose exec php bin/console hautelook:fixtures:load
+	docker-compose exec $(DOCKER_COMPOSE_EXEC_OPTIONS) php bin/console hautelook:fixtures:load
+
+lint:
+	docker-compose exec $(DOCKER_COMPOSE_EXEC_OPTIONS) php vendor/bin/phpcs --standard=PSR12 src
+
+fix:
+	docker-compose exec $(DOCKER_COMPOSE_EXEC_OPTIONS) php vendor/bin/phpcbf --standard=PSR12 src
