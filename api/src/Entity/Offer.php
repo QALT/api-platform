@@ -25,10 +25,10 @@ class Offer
 {
     use TimestampableTrait;
 
-    const CREATED = "created";
-    const DELETED = "deleted";
+    public const CREATED = "created";
+    public const DELETED = "deleted";
 
-    const STATUS = [
+    public const STATUS = [
         self::CREATED,
         self::DELETED
     ];
