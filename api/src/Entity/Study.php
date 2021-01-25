@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\StudyRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,9 +12,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *  normalizationContext={"groups"={"study:read"}},
- *  denormalizationContext={"groups"={"study:write"}}
+ *      normalizationContext={"groups"={"study:read"}},
+ *      denormalizationContext={"groups"={"study:write"}}
  * )
+ * @ApiFilter(SearchFilter::class, properties={"userAccount.id": "exact"})
  * @ORM\Entity(repositoryClass=StudyRepository::class)
  */
 class Study
