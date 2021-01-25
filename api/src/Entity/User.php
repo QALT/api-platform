@@ -93,6 +93,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity=Address::class, inversedBy="userAccount", cascade={"persist", "remove"})
+     * @Groups({"user:read", "user:write"})
      */
     private $address;
 

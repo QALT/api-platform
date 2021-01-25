@@ -6,9 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"address:read"}},
+ *      denormalizationContext={"groups"={"address:write"}}
+ * )
  * @ORM\Entity(repositoryClass=AddressRepository::class)
  */
 class Address
@@ -19,31 +23,37 @@ class Address
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"address:read", "user:read", "user:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"address:read", "user:read", "user:write"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"address:read", "user:read", "user:write"})
      */
     private $region;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"address:read", "user:read", "user:write"})
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"address:read", "user:read", "user:write"})
      */
     private $town;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"address:read", "user:read", "user:write"})
      */
     private $street;
 
