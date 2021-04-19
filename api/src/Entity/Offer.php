@@ -61,7 +61,7 @@ class Offer
     private $status = self::CREATED;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offers")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offers", cascade={"persist"})
      * @Groups({"offer:read", "offer:write"})
      */
     private $employer;

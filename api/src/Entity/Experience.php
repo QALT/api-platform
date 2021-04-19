@@ -34,7 +34,7 @@ class Experience
     private $label;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      * @Groups({"user:read"})
      */
     private $description;
