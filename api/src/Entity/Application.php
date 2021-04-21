@@ -55,7 +55,7 @@ class Application
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Offer::class, inversedBy="applications")
+     * @ORM\ManyToOne(targetEntity=Offer::class, inversedBy="applications", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"application:write", "application:read"})
      */

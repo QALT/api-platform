@@ -1,0 +1,9 @@
+App\Entity\Experience:
+    experience_1:
+        userAccount: '@user_employee'
+        label: 'otot'
+        description: <fr_FR:paragraph()>
+        startDate: '2021-04-01'
+        endDate: '2021-04-19'
+        # startDate: <date('Y-m-d', 'now')>
+        # endDate: <dateTimeBetween(current()->startDate, 'now')->format('Y-m-d')>

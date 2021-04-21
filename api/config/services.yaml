@@ -46,3 +46,8 @@ services:
         arguments: [ '@request_stack' ]
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+    App\Faker\Provider\Application: ~
+    App\Faker\Provider\Degree: ~
+    App\Faker\Provider\Offer: ~
+    App\Faker\Provider\Tag: ~
