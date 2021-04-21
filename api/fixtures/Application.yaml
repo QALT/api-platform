@@ -1,6 +1,6 @@
 App\Entity\Application:
-    application_{1..5}:
+    application_{1..10}:
+        status: <applicationStatus()>
+        comment: <applicationCommentFromStatus(@self->status)>
         offer: '@offer_*'
         applicant: '@user_employee'
-        status: <applicationStatus()>
-        comment: <fr_FR:paragraph()>

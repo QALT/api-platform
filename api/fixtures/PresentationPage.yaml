@@ -1,0 +1,5 @@
+App\Entity\PresentationPage:
+  presentation_page_1:
+    content: <fr_FR:realText()>
+    status: <presentationPageStatus()>
+    owner: '@user_employee'

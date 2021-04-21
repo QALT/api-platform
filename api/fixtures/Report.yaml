@@ -1,0 +1,6 @@
+App\Entity\Report:
+  report_{1..10}:
+    status: <reportStatus()>
+    motivation: <reportMotivation()>
+    reporter: '@user_employee'
+    offer: '@offer_*'

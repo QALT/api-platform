@@ -51,3 +51,6 @@ services:
     App\Faker\Provider\Degree: ~
     App\Faker\Provider\Offer: ~
     App\Faker\Provider\Tag: ~
+    App\Faker\Provider\Experience: ~
+    App\Faker\Provider\Study: ~
+    App\Faker\Provider\PresentationPage: ~
