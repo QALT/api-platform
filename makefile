@@ -13,6 +13,7 @@ start:
 	docker-compose up --detach
 
 stop:
+
 	docker-compose down --remove-orphans --volumes --timeout 0
 
 restart: stop start
@@ -31,3 +32,6 @@ lint:
 
 fix:
 	docker-compose exec $(DOCKER_COMPOSE_EXEC_OPTIONS) php vendor/bin/phpcbf --standard=PSR12 src
+
+tests:
+	docker-compose exec $(DOCKER_COMPOSE_EXEC_OPTIONS) php vendor/bin/behat
