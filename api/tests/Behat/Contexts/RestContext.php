@@ -123,24 +123,23 @@ final class RestContext extends ApiTestCase implements Context {
             foreach ($payload as $key => $param) {
                 if(gettype($param) != "string"){
                     continue;
-                }
-                $regex = '/({(?<entity>.*?)\.(?<value>.*?)})/';
+                } 
+                $regex = '/({(?<entity>.*?)})/';
                 $matches = [];
                 preg_match($regex, $param, $matches);
 
                 if (!empty($matches)) {
-                    ['entity' => $entity, 'value' => $value] = $matches;
+                    ['entity' => $entity] = $matches;
                     $referenceValue = ReferencesManager::getReference($entity);
 
                     if (!$referenceValue) {
                         throw new \Exception("Index $entity not found in references");
                     }
 
-                    $route = $entity === 'user_auth' ? 'users' : $entity . 's';
-                    $payload->$key = "/api/$route/{$referenceValue}";
-                }
+                    $route = $entity === 'user_auth' ? 'users' : explode('_', $entity)[0] . 's';
+                    $payload->$key = "/api/$route/$referenceValue";
+                }    
             }
-            
             $options['body'] = json_encode($payload);
             $this->payload = null;
         }
