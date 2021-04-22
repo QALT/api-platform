@@ -1,14 +1,30 @@
 App\Entity\User:
-    user_employee:
-        email: "employee@gmail.com"
+    user_employee_1:
+        email: "employee1@gmail.com"
         plainPassword: "Password"
         firstname: <fr_FR:firstName()>
         lastname: <fr_FR:lastname()>
         roles: ['ROLE_EMPLOYEE']
         status: "enabled"
         address (unique): '@address_*'
-    user_employer:
-        email: "employer@gmail.com"
+    user_employee_2:
+        email: "employee2@gmail.com"
+        plainPassword: "Password"
+        firstname: <fr_FR:firstName()>
+        lastname: <fr_FR:lastname()>
+        roles: ['ROLE_EMPLOYEE']
+        status: "enabled"
+        address (unique): '@address_*'
+    user_employer_1:
+        email: "employer1@gmail.com"
+        plainPassword: "Password"
+        firstname: <fr_FR:firstName()>
+        lastname: <fr_FR:lastname()>
+        roles: ['ROLE_EMPLOYER']
+        status: "enabled"
+        address (unique): '@address_*'
+    user_employer_2:
+        email: "employer2@gmail.com"
         plainPassword: "Password"
         firstname: <fr_FR:firstName()>
         lastname: <fr_FR:lastname()>

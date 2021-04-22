@@ -3,4 +3,4 @@ App\Entity\Application:
         status: <applicationStatus()>
         comment: <applicationCommentFromStatus(@self->status)>
         offer: '@offer_*'
-        applicant: '@user_employee'
+        applicant: '@user_employee_*'

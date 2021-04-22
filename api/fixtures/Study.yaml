@@ -3,4 +3,4 @@ App\Entity\Study:
         label (unique): <studyLabel()>
         school (unique): <studySchool()>
         degree: '@degree_*'
-        userAccount: '@user_employee'
+        userAccount: '@user_employee_*'

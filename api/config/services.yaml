@@ -54,3 +54,4 @@ services:
     App\Faker\Provider\Experience: ~
     App\Faker\Provider\Study: ~
     App\Faker\Provider\PresentationPage: ~
+    App\Faker\Provider\Message: ~

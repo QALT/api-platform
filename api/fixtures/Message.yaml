@@ -1,50 +1,50 @@
 App\Entity\Message:
   message_1:
-    content: <fr_FR:realText()>
-    receiver: '@user_employee'
-    sender: '@user_employer'
+    content: <messageContent()>
+    receiver: '@user_employee_*'
+    sender: '@user_employer_*'
 
   message_2:
-    content: <fr_FR:realText()>
-    sender: '@user_employee'
-    receiver: '@user_employer'
+    content: <messageContent()>
+    sender: '@user_employee_*'
+    receiver: '@user_employer_*'
 
   message_3:
-    content: <fr_FR:realText()>
-    receiver: '@user_employee'
-    sender: '@user_employer'
+    content: <messageContent()>
+    receiver: '@user_employee_*'
+    sender: '@user_employer_*'
 
   message_4:
-    content: <fr_FR:realText()>
-    sender: '@user_employee'
-    receiver: '@user_employer'
+    content: <messageContent()>
+    sender: '@user_employee_*'
+    receiver: '@user_employer_*'
 
   message_5:
-    content: <fr_FR:realText()>
-    receiver: '@user_employee'
-    sender: '@user_employer'
+    content: <messageContent()>
+    receiver: '@user_employee_*'
+    sender: '@user_employer_*'
 
   message_6:
-    content: <fr_FR:realText()>
-    sender: '@user_employee'
-    receiver: '@user_employer'
+    content: <messageContent()>
+    sender: '@user_employee_*'
+    receiver: '@user_employer_*'
 
   message_7:
-    content: <fr_FR:realText()>
-    receiver: '@user_employee'
-    sender: '@user_employer'
+    content: <messageContent()>
+    receiver: '@user_employee_*'
+    sender: '@user_employer_*'
 
   message_8:
-    content: <fr_FR:realText()>
-    sender: '@user_employee'
-    receiver: '@user_employer'
+    content: <messageContent()>
+    sender: '@user_employee_*'
+    receiver: '@user_employer_*'
 
   message_9:
-    content: <fr_FR:realText()>
-    receiver: '@user_employee'
-    sender: '@user_employer'
+    content: <messageContent()>
+    receiver: '@user_employee_*'
+    sender: '@user_employer_*'
 
   message_10:
-    content: <fr_FR:realText()>
-    sender: '@user_employee'
-    receiver: '@user_employer'
+    content: <messageContent()>
+    sender: '@user_employee_*'
+    receiver: '@user_employer_*'

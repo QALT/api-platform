@@ -1,6 +1,6 @@
 App\Entity\Offer:
-    offer_{1..5}:
-        employer: '@user_employer'
+    offer_{1..10}:
+        employer: '@user_employer_*'
         title: <offerTitle()>
         description: <offerDescription(@self->title)>
         status: <offerStatus()>

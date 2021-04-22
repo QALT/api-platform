@@ -1,6 +1,12 @@
 App\Entity\Report:
-  report_{1..10}:
+  report_{1..5}:
     status: <reportStatus()>
     motivation: <reportMotivation()>
-    reporter: '@user_employee'
+    reporter: '@user_employee_*'
+    offer: '@offer_*'
+
+  report_{6..10}:
+    status: <reportStatus()>
+    motivation: <reportMotivation()>
+    reporter: '@user_employer_*'
     offer: '@offer_*'

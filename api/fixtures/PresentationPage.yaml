@@ -1,5 +1,10 @@
 App\Entity\PresentationPage:
   presentation_page_1:
-    content: <fr_FR:realText()>
+    content: <presentationPageContent()>
     status: <presentationPageStatus()>
-    owner: '@user_employee'
+    owner: '@user_employee_1'
+
+  presentation_page_2:
+    content: <presentationPageContent()>
+    status: <presentationPageStatus()>
+    owner: '@user_employee_2'
