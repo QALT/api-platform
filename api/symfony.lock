@@ -134,6 +134,9 @@
     "fig/link-util": {
         "version": "1.1.1"
     },
+    "firebase/php-jwt": {
+        "version": "v5.2.1"
+    },
     "friends-of-behat/mink-extension": {
         "version": "v2.5.0"
     },

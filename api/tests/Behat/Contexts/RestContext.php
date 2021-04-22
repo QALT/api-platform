@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
+use Firebase\JWT\JWT;
 use Hautelook\AliceBundle\PhpUnit\BaseDatabaseTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -41,7 +42,7 @@ final class RestContext extends ApiTestCase implements Context
     /** @var string */
     private $token;
 
-    private $references;
+    private $references = [];
 
     public function __construct(KernelInterface $kernel) {
         parent::__construct();
@@ -94,6 +95,10 @@ final class RestContext extends ApiTestCase implements Context
 
         $response = $this->createClient()->request('POST', '/authentication_token', $options);
         $response = json_decode($response->getContent());
+
+        $key = file_get_contents(__DIR__ . '/../../../config/jwt/public.pem');
+        $payload = JWT::decode($response->token, $key, ['RS256']);
+        $this->references['auth'] = $payload;
         $this->iSetHeaderToBe('Authorization', "Bearer $response->token");
     }
 
@@ -112,7 +117,27 @@ final class RestContext extends ApiTestCase implements Context
         $options = ['headers' => $this->headers];
 
         if ($this->payload) {
-            $options['body'] = $this->payload->getRaw();
+            $payload = json_decode($this->payload->getRaw());
+
+            foreach ($payload as $key => $param) {
+                $regex = '/({(?<entity>.*?)\.(?<value>.*?)})/';
+                $matches = [];
+                preg_match($regex, $param, $matches);
+
+                if (!empty($matches)) {
+                    ['entity' => $entity, 'value' => $value] = $matches;
+                    $foundReference = $this->propertyAccessor->getValue($this->references, "[$entity]");
+
+                    if (!$foundReference) {
+                        throw new \Exception("Index $entity not found in references");
+                    }
+
+                    $route = $entity === 'auth' ? 'users' : $entity . 's';
+                    $payload->$key = "/api/$route/{$foundReference->$value}";
+                }
+            }
+            
+            $options['body'] = json_encode($payload);
             $this->payload = null;
         }
 
@@ -170,5 +195,13 @@ final class RestContext extends ApiTestCase implements Context
     public function theResponseShouldContainWithValue($key, $value) {
         $this->theResponseShouldContain($key);
         assertEquals($this->propertyAccessor->getValue($this->responseContent, $key), $value);
+    }
+
+    /**
+     * @Then I am logged out
+     */
+    public function iAmLoggedOut() {
+        unset($this->references['auth']);
+        unset($this->headers['Authorization']);
     }
 }

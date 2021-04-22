@@ -33,3 +33,4 @@ Feature: users
         When I request "GET" "/api/users/{user.@id}"
         Then the response status code should be "200"
         Then the response should contain key "email" with value "test@gmail.com"
+        Then I am logged out
