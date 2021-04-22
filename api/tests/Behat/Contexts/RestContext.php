@@ -8,7 +8,7 @@ use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Fidry\AliceDataFixtures\Loader\PersisterLoader;
-use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
+use Hautelook\AliceBundle\PhpUnit\BaseDatabaseTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -19,9 +19,10 @@ use function PHPUnit\Framework\assertTrue;
 
 final class RestContext extends ApiTestCase implements Context
 {
-    use RefreshDatabaseTrait;
     use HeaderContextTrait;
     use FixturesContextTrait;
+    use BaseDatabaseTrait;
+    use HookContextTrait;
 
     /** @var Response|null */
     private $response;
@@ -59,15 +60,27 @@ final class RestContext extends ApiTestCase implements Context
         ];
 
         switch ($userType) {
-            case 'employee':
+            case 'employee1':
                 $options['body'] = json_encode([
-                    'email' => 'employee@gmail.com',
+                    'email' => 'employee1@gmail.com',
                     'password' => 'Password'
                 ]);
                 break;
-            case 'employer':
+            case 'employee2':
                 $options['body'] = json_encode([
-                    'email' => 'employer@gmail.com',
+                    'email' => 'employee2@gmail.com',
+                    'password' => 'Password'
+                ]);
+                break;
+            case 'employer1':
+                $options['body'] = json_encode([
+                    'email' => 'employer1@gmail.com',
+                    'password' => 'Password'
+                ]);
+                break;
+            case 'employer2':
+                $options['body'] = json_encode([
+                    'email' => 'employer2@gmail.com',
                     'password' => 'Password'
                 ]);
                 break;
@@ -103,6 +116,16 @@ final class RestContext extends ApiTestCase implements Context
             $this->payload = null;
         }
 
+        $regex = '/({(?<entity>.*?)\.(?<value>.*?)})/';
+        $matches = [];
+        preg_match($regex, $path, $matches);
+
+        if (!empty($matches)) {
+            ['entity' => $entity, 'value' => $value] = $matches;
+            $foundReference = $this->propertyAccessor->getValue($this->references, "[$entity]");
+            $path = $foundReference->$value;
+        }
+
         $this->response = $this->createClient()->request($method, $path, $options);
 
         if ($this->response->getStatusCode() < 300) {
@@ -125,7 +148,6 @@ final class RestContext extends ApiTestCase implements Context
      */
     public function iAddAReference($reference) {
         $this->references[$reference] = $this->responseContent;
-        var_dump($this->references);
     }
 
     /**
