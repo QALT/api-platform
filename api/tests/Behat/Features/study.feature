@@ -9,6 +9,20 @@ Feature: studies
         Then the response status code should be "200"
         Then the response should contain key "hydra:member[0]"
         Then I am logged out
+    
+    Scenario: Fetch study without authorization token
+        When I request "GET" "/api/studies/{study_1}"
+        Then the response status code should be "401"
+    
+    Scenario: Fetch study with authorization token
+        When I am logged as "employee1"
+        When I request "GET" "/api/studies/{study_1}"
+        Then the response status code should be "200"
+        Then the response should contain key "label"
+        Then the response should contain key "school"
+        Then the response should contain key "degree"
+        Then the response should contain key "userAccount"
+        Then I am logged out
 
     Scenario: Delete study without authorization token
         When I request "DELETE" "/api/studies/1"
@@ -69,6 +83,9 @@ Feature: studies
         When I am logged as "employee1"
         When I request "POST" "/api/studies"
         Then the response status code should be "201"
+        Then the response should contain key "id"
+        Then the response should contain key "label"
+        Then the response should contain key "school"
         Then I add a reference "study"
         When I request "GET" "/api/studies/{study}"
         Then the response status code should be "200"
