@@ -15,8 +15,13 @@ Feature: users
         When I am logged as "employee1"
         And I request "GET" "/api/users"
         Then the response status code should be "200"
+<<<<<<< HEAD
         And the response should contain key "hydra:member[0]"
         And I am logged out
+=======
+        Then the response should contain key "hydra:member[0]"
+        Then I am logged out
+>>>>>>> correction bug applications
 
     Scenario: Register new user
         Given I have the Payload
@@ -27,6 +32,7 @@ Feature: users
             "owner": "/api/users/{user_employee_1}"
         }
         """
+        When I am logged as "admin"
         When I request "POST" "/api/users"
         Then the response status code should be "201"
         And the response should contain key "id"
