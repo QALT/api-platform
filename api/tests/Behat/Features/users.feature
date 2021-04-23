@@ -27,7 +27,6 @@ Feature: users
             "owner": "/api/users/{user_employee_1}"
         }
         """
-        When I am logged as "admin"
         When I request "POST" "/api/users"
         Then the response status code should be "201"
         And the response should contain key "id"
