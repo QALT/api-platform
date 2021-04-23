@@ -13,3 +13,4 @@ Feature: studies
         When I am logged as "employee1"
         When I request "GET" "/api/studies?userAccount={user_auth}"
         Then the response status code should be "201"
+
