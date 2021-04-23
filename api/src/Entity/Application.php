@@ -14,7 +14,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *      normalizationContext={"groups"={"application:read"}},
- *      denormalizationContext={"groups"={"application:write"}}
+ *      denormalizationContext={"groups"={"application:write"}},
+ *      collectionOperations={
+ *         "get"={"security"="is_granted('ROLE_ADMIN') or object.getOffer().owner == user or object.getApplicant() == user"},
+ *         "post"={"security"="is_granted('ROLE_EMPLOYEE')"}
+ *     },
+ *     itemOperations={
+ *         "get"={"security"="is_granted('ROLE_ADMIN') or object.getOffer().owner == user or object.getApplicant() == user"},
+ *         "put"={"security"="is_granted('ROLE_ADMIN') or object.getOffer().owner == user or object.getApplicant() == user"},
+ *         "delete"={"security"="is_granted('ROLE_ADMIN') or object.getApplicant() == user"},
+ *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"offer.employer.id": "exact", "applicant.id": "exact"})
  * @ORM\Entity(repositoryClass=ApplicationRepository::class)

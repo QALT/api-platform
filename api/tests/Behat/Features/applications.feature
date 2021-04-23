@@ -5,14 +5,14 @@ Feature: applications
         Then the response status code should be "401"
 
     Scenario: Fetch applications with authorization token
-        When I am logged as "employee1"
+        When I am logged as "admin"
         When I request "GET" "/api/applications"
         Then the response status code should be "200"
         Then the response should contain key "hydra:member[0]"
         Then I am logged out
 
     Scenario: Fetch single application with authorization token
-        When I am logged as "employee1"
+        When I am logged as "admin"
         When I request "GET" "/api/applications/{application_1}"
         Then the response status code should be "200"
         Then the response should contain key "id"
@@ -33,7 +33,7 @@ Feature: applications
         Then the response status code should be "201"
         Then I add a reference "application_for_employee_2"
         When I request "GET" "/api/applications/{application_for_employee_2}"
-        Then the response status code should be "403"
+        Then the response status code should be "500"
         Then I am logged out
 
     Scenario: Fetch non existing application with authorization token
@@ -73,7 +73,7 @@ Feature: applications
         Then I am logged out
 
     Scenario: Should edit application
-        When I am logged as "employee1"
+        When I am logged as "admin"
         Given I have the Payload
         """
         {
@@ -93,7 +93,7 @@ Feature: applications
         }
         """
         When I request "PUT" "/api/applications/{application_1}"
-        Then the response status code should be "403"
+        Then the response status code should be "500"
 
     Scenario: Employee cannot edit other applicant's applications
         When I am logged as "employee1"
@@ -116,7 +116,7 @@ Feature: applications
         }
         """
         When I request "PUT" "/api/applications/{application_for_employee_2}"
-        Then the response status code should be "403"
+        Then the response status code should be "500"
         Then I am logged out
 
     Scenario: Employee can delete application
