@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *      normalizationContext={"groups"={"address:read"}},
+ *      normalizationContext={"groups"={"address:read", "address:write"}},
  *      denormalizationContext={"groups"={"address:write"}}
  * )
  * @ORM\Entity(repositoryClass=AddressRepository::class)
@@ -23,37 +23,37 @@ class Address
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"address:read", "user:read", "user:write"})
+     * @Groups({"address:read", "address:write", "user:read", "user:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"address:read", "user:read", "user:write"})
+     * @Groups({"address:read", "address:write", "user:read", "user:write"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"address:read", "user:read", "user:write"})
+     * @Groups({"address:read", "address:write", "user:read", "user:write"})
      */
     private $region;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"address:read", "user:read", "user:write"})
+     * @Groups({"address:read", "address:write", "user:read", "user:write"})
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"address:read", "user:read", "user:write"})
+     * @Groups({"address:read", "address:write", "user:read", "user:write"})
      */
     private $town;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"address:read", "user:read", "user:write"})
+     * @Groups({"address:read", "address:write", "user:read", "user:write"})
      */
     private $street;
 
