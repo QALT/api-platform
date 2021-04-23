@@ -170,8 +170,8 @@ final class RestContext extends ApiTestCase implements Context {
      * @Then the response status code should be :statusCode
      */
     public function theResponseStatusCodeShouldBe($statusCode) {
-        var_dump($this->response->getStatusCode());
         if ($this->response->getStatusCode() != $statusCode) {
+            var_dump($this->response->getStatusCode());
             throw new \RuntimeException('No response received');
         }
     }

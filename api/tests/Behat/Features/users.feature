@@ -18,6 +18,19 @@ Feature: users
         And the response should contain key "hydra:member[0]"
         And I am logged out
 
+    Scenario: Fetch single user with authorization token
+        When I am logged as "admin"
+        When I request "GET" "/api/users/{user_employee_1}"
+        Then the response status code should be "200"
+        Then the response should contain key "id"
+        Then I am logged out
+
+    Scenario: Fetch non existing user with authorization token
+        When I am logged as "employee1"
+        And I request "GET" "/api/users/abc"
+        Then the response status code should be "404"
+        And I am logged out
+
     Scenario: Register new user
         Given I have the Payload
         """
