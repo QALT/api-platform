@@ -94,7 +94,6 @@ Feature: applications
         """
         When I request "PUT" "/api/applications/{application_1}"
         Then the response status code should be "403"
-        Then I am logged out
 
     Scenario: Employee cannot edit other applicant's applications
         When I am logged as "employee1"

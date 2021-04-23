@@ -73,5 +73,3 @@ Feature: studies
         When I request "GET" "/api/studies/{study}"
         Then the response status code should be "200"
         Then I am logged out
-
-        
