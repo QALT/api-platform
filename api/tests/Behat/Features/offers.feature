@@ -3,8 +3,22 @@ Feature: offers
         When I request "GET" "/api/offers"
         Then the response status code should be "401"
     
+    Scenario: Fetch offer without authorization token
+        When I request "GET" "/api/offers/{offer_1}"
+        Then the response status code should be "401"
+    
+    Scenario: Fetch offer while logged in
+        When I am logged as "employer1"
+        When I request "GET" "/api/offers/{offer_1}"
+        Then the response status code should be "200"
+        Then the response should contain key "employer"
+        Then the response should contain key "title"
+        Then the response should contain key "description"
+        Then the response should contain key "status"
+        Then I am logged out
+    
     Scenario: Fetch offers while logged in
-        When I am logged as "employee1"
+        When I am logged as "employer1"
         When I request "GET" "/api/offers"
         Then the response status code should be "200"
         Then the response should contain key "hydra:member[0]"
