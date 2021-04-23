@@ -124,6 +124,7 @@ final class RestContext extends ApiTestCase implements Context {
                 if(gettype($param) != "string"){
                     continue;
                 } 
+
                 $regex = '/({(?<entity>.*?)})/';
                 $matches = [];
                 preg_match($regex, $param, $matches);
@@ -136,15 +137,13 @@ final class RestContext extends ApiTestCase implements Context {
                         throw new \Exception("Index $entity not found in references");
                     }
 
-                    $route = $entity === 'user_auth' ? 'users' : explode('_', $entity)[0] . 's';
-                    $payload->$key = "/api/$route/$referenceValue";
-                }    
+                    $payload->$key = preg_replace($regex, $referenceValue, $param);
             }
             $options['body'] = json_encode($payload);
             $this->payload = null;
         }
 
-        $regex = '/({(?<entity>.*?)})/';
+        $regex = '/({(?<entity>.*?)})/'; // {....}
         $matches = [];
         preg_match($regex, $path, $matches);
 
@@ -156,8 +155,7 @@ final class RestContext extends ApiTestCase implements Context {
                 throw new \Exception("Index $entity not found in references");
             }
 
-            $route = $entity === 'user_auth' ? 'users' : explode('_', $entity)[0] . 's';
-            $path = "/api/$route/$referenceValue";
+            $path = preg_replace($regex, $referenceValue, $path);
         }
 
         $this->response = $this->createClient()->request($method, $path, $options);
@@ -211,6 +209,6 @@ final class RestContext extends ApiTestCase implements Context {
      */
     public function iAmLoggedOut() {
         ReferencesManager::deleteReference('user_auth');
-        ReferencesManager::deleteReference('Authorization');
+        unset($this->headers['Authorization']);
     }
 }

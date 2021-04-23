@@ -107,23 +107,23 @@ class User implements UserInterface
     private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity=Study::class, mappedBy="userAccount")
+     * @ORM\OneToMany(targetEntity=Study::class, mappedBy="userAccount", orphanRemoval=true)
      * @Groups({"user:read"})
      */
     private $studies;
 
     /**
-     * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="employer")
+     * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="employer", orphanRemoval=true)
      */
     private $offers;
 
     /**
-     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="reporter")
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="reporter", orphanRemoval=true)
      */
     private $reports;
 
     /**
-     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="userReported")
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="userReported", orphanRemoval=true)
      */
     private $reportedBy;
 
@@ -143,12 +143,12 @@ class User implements UserInterface
     private $receivedMessages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="sender")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="sender", orphanRemoval=true)
      */
     private $sentMessages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="userAccount")
+     * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="userAccount", orphanRemoval=true)
      * @Groups({"user:read"})
      */
     private $experiences;
