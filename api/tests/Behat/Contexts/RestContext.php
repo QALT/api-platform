@@ -120,8 +120,11 @@ final class RestContext extends ApiTestCase implements Context {
 
         if ($this->payload) {
             $payload = json_decode($this->payload->getRaw());
-
             foreach ($payload as $key => $param) {
+                if(gettype($param) != "string"){
+                    continue;
+                } 
+
                 $regex = '/({(?<entity>.*?)})/';
                 $matches = [];
                 preg_match($regex, $param, $matches);
@@ -135,9 +138,7 @@ final class RestContext extends ApiTestCase implements Context {
                     }
 
                     $payload->$key = preg_replace($regex, $referenceValue, $param);
-                }
             }
-            
             $options['body'] = json_encode($payload);
             $this->payload = null;
         }
