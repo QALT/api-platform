@@ -95,7 +95,7 @@ Feature: applications
         Then I am logged out
 
     Scenario: Employee cannot delete tag
-        When I am logged as "admin"
-        When I request "DELETE" "/api/tags/{tag_1}"
+        When I am logged as "employee1"
+        When I request "DELETE" "/api/tags/{tag_2}"
         Then the response status code should be "403"
         Then I am logged out
