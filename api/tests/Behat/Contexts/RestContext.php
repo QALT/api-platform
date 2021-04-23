@@ -138,6 +138,7 @@ final class RestContext extends ApiTestCase implements Context {
                     }
 
                     $payload->$key = preg_replace($regex, $referenceValue, $param);
+                }
             }
             $options['body'] = json_encode($payload);
             $this->payload = null;
