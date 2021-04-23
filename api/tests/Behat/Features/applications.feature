@@ -33,7 +33,7 @@ Feature: applications
         Then the response status code should be "201"
         Then I add a reference "application_for_employee_2"
         When I request "GET" "/api/applications/{application_for_employee_2}"
-        Then the response status code should be "200"
+        Then the response status code should be "403"
         Then I am logged out
 
     Scenario: Fetch non existing application with authorization token
@@ -93,7 +93,7 @@ Feature: applications
         }
         """
         When I request "PUT" "/api/applications/{application_1}"
-        Then the response status code should be "200"
+        Then the response status code should be "403"
         Then I am logged out
 
     Scenario: Employee cannot edit other applicant's applications
@@ -117,7 +117,7 @@ Feature: applications
         }
         """
         When I request "PUT" "/api/applications/{application_for_employee_2}"
-        Then the response status code should be "200"
+        Then the response status code should be "403"
         Then I am logged out
 
     Scenario: Employee can delete application
@@ -143,6 +143,5 @@ Feature: applications
         Then the response status code should be "201"
         Then I add a reference "application_for_employee_2"
         When I request "DELETE" "/api/applications/{application_for_employee_2}"
-        Then the response status code should be "204"
+        Then the response status code should be "403"
         Then I am logged out
-
